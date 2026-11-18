@@ -1,0 +1,69 @@
+/* 沿用桌面 UI Kit 的语义令牌与按钮约定；不依赖应用运行时。 */
+:root {
+  color-scheme: dark light;
+  --theme-bg: #0a0a0f; --theme-surface: #14141c; --theme-card: #1a1a26;
+  --theme-border: #2a2a3a; --theme-text: #dddde4;
+  --theme-text-secondary: #a6a6b9; --theme-text-muted: #9696ac;
+  --brand: #5558de; --brand-hover: #494cc8; --brand-light: #a5b4fc; --brand-contrast: #ffffff;
+  --ui-radius: 8px; --ui-radius-lg: 12px; --transition-fast: 180ms ease;
+}
+* { box-sizing: border-box; }
+html { min-width: 300px; scroll-behavior: smooth; }
+body { margin: 0; background: var(--theme-bg); color: var(--theme-text); font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+a:focus-visible, summary:focus-visible { outline: 3px solid var(--brand-light); outline-offset: 5px; }
+.page-shell { width: min(1080px, 100% - 64px); margin-inline: auto; }
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 28px; border-bottom: 1px solid var(--theme-border); }
+.brand { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 18px; font-weight: 650; letter-spacing: .03em; }
+.brand img { border-radius: var(--ui-radius-lg); }
+.header-note { color: var(--theme-text-muted); font-size: 13px; }
+.hero { padding-block: 68px 40px; text-align: center; }
+.version-line { display: inline-flex; align-items: center; gap: 8px; color: var(--brand-light); font-size: 13px; font-weight: 600; letter-spacing: .04em; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+h1 { margin: 14px 0 12px; font-size: clamp(32px, 5.5vw, 52px); font-weight: 700; line-height: 1.22; letter-spacing: -.035em; text-wrap: balance; }
+.intro { margin: 0; color: var(--theme-text-secondary); font-size: 17px; }
+.downloads { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; scroll-margin-top: 24px; }
+.download-card { min-width: 0; padding: 24px; border: 1px solid var(--theme-border); border-radius: var(--ui-radius-lg); background: var(--theme-surface); }
+.platform-icon { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 24px; border: 1px solid var(--theme-border); border-radius: var(--ui-radius-lg); color: var(--theme-text); background: var(--theme-card); }
+.platform-icon svg { width: 24px; height: 24px; }
+h2 { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 23px; font-weight: 650; line-height: 1.4; }
+.chip-label { padding: 2px 7px; border: 1px solid var(--theme-border); border-radius: 5px; color: var(--theme-text-secondary); font-size: 12px; font-weight: 500; white-space: nowrap; }
+.platform-description { margin: 8px 0 28px; color: var(--theme-text-secondary); font-size: 13px; }
+.file-info { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 12px; color: var(--theme-text-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.ui-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 10px 12px; border: 1px solid transparent; border-radius: var(--ui-radius); font: inherit; font-size: 14px; font-weight: 600; line-height: 1.5; cursor: pointer; transition: background var(--transition-fast), transform var(--transition-fast); }
+.ui-btn--primary { background: var(--brand); color: var(--brand-contrast); }
+.ui-btn--primary:hover { background: var(--brand-hover); }
+.ui-btn--primary:active { transform: translateY(1px); }
+.download-button { width: 100%; }
+.download-button svg { flex-shrink: 0; width: 18px; height: 18px; }
+.release-status { margin: 20px 0 0; text-align: center; color: var(--theme-text-muted); font-size: 12px; min-height: 20px; }
+.download-help { max-width: 700px; margin: 36px auto 0; }
+details { border-top: 1px solid var(--theme-border); border-bottom: 1px solid var(--theme-border); }
+summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 52px; padding-block: 12px; font-size: 14px; cursor: pointer; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary > span { color: var(--theme-text-muted); transition: transform var(--transition-fast); }
+details[open] summary > span { transform: rotate(45deg); }
+details p { margin: 0 0 16px; color: var(--theme-text-secondary); font-size: 13px; }
+.mac-notice { margin: 16px 0 0; color: var(--theme-text-muted); font-size: 12px; line-height: 1.8; }
+footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 64px; padding-block: 24px; border-top: 1px solid var(--theme-border); color: var(--theme-text-muted); font-size: 12px; }
+footer a { display: inline-flex; align-items: center; min-height: 44px; gap: 6px; text-underline-offset: 4px; }
+footer a:hover { color: var(--theme-text); text-decoration: underline; }
+.skip-link { position: absolute; top: 8px; left: 16px; z-index: 2; padding: 12px; border-radius: var(--ui-radius); background: var(--theme-card); transform: translateY(-160%); }
+.skip-link:focus { transform: translateY(0); }
+@media (prefers-color-scheme: light) {
+  :root { --theme-bg: #fafafa; --theme-surface: #ffffff; --theme-card: #f1f1f6; --theme-border: #dcdce6; --theme-text: #20202c; --theme-text-secondary: #565669; --theme-text-muted: #656579; --brand-light: #4f46b8; }
+}
+@media (max-width: 780px) {
+  .page-shell { width: min(480px, 100% - 40px); }
+  .site-header { padding-block: 20px; }
+  .header-note { font-size: 12px; }
+  .hero { padding-block: 48px 30px; }
+  .intro { font-size: 15px; }
+  .downloads { grid-template-columns: 1fr; gap: 12px; }
+  .download-card { position: relative; padding: 20px; }
+  .platform-icon { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; margin: 0; }
+  .platform-icon svg { width: 20px; height: 20px; }
+  .platform-description { padding-right: 35px; margin-bottom: 22px; }
+  footer { margin-top: 40px; flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none; } }
