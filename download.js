@@ -1,10 +1,9 @@
-/* 从公开发行仓库读取三种安装包；失败时保留已确认的 V4.5 链接。 */
+/* Windows 按用户要求固定为本机已安装的 V4.0；Mac 读取最新正式版。 */
 (() => {
   const repository = 'Gaoliuliu-0521/liuliu-canvas';
   const endpoint = 'https://api.github.com/repos/' + repository + '/releases/latest';
   const releaseBase = 'https://github.com/' + repository + '/releases/';
   const patterns = {
-    windows: /^liuliu-canvas_\d+\.\d+\.\d+_x64-setup\.exe$/,
     macos: /^liuliu-canvas_\d+\.\d+\.\d+_aarch64\.dmg$/,
     'macos-intel': /^liuliu-canvas_\d+\.\d+\.\d+_x64\.dmg$/,
   };
@@ -13,7 +12,7 @@
   const notes = document.getElementById('release-notes');
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 8000);
-  const fallback = () => { status.textContent = '当前提供 V4.5 安装包。暂时无法读取最新版本，仍可直接下载。'; };
+  const fallback = () => { status.textContent = 'Windows 为 V4.0，Mac 为 V4.5。暂时无法读取 Mac 最新版本，仍可直接下载。'; };
   fetch(endpoint, { headers: { Accept: 'application/vnd.github+json' }, signal: controller.signal, cache: 'no-store', credentials: 'omit' })
     .then((response) => {
       if (!response.ok) throw new Error('Release unavailable');
@@ -33,14 +32,15 @@
           || !asset.name.includes('_' + release.tag_name.slice(1) + '_')) throw new Error('Unexpected installer');
         return { platform, asset };
       });
+      const version = release.tag_name.slice(1).replace(/\.0$/, '');
       for (const { platform, asset } of downloads) {
         document.querySelector('[data-download="' + platform + '"]').href = asset.browser_download_url;
         document.querySelector('[data-size="' + platform + '"]').textContent = (asset.size / (1024 * 1024)).toFixed(1) + ' MB';
+        document.querySelector('[data-version="' + platform + '"]').textContent = 'V' + version;
       }
-      const version = release.tag_name.slice(1).replace(/\.0$/, '');
-      label.textContent = '正式版 V' + version;
+      label.textContent = 'Windows V4.0 · Mac V' + version;
       notes.href = release.html_url;
-      status.textContent = '当前正式版 V' + version + ' · 点击对应按钮即可下载安装包';
+      status.textContent = 'Windows 提供本机已安装版对应的 V4.0 原安装包；Mac 提供 V' + version + '。';
     })
     .catch(fallback)
     .finally(() => clearTimeout(timeout));
